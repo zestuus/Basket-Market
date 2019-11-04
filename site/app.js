@@ -9,6 +9,25 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+var Pool = require("pg").Pool;
+var pool = new Pool({
+	user: "postgres",
+	host: "localhost",
+	database: "basket-market",
+	password: "Elenberg22",
+	port: 5432
+}) 
+
+// app.get("/query",(req,res)=>{
+// 	pool.query('SELECT * FROM users', (err,result)=>{
+// 		if(err){
+// 			throw err.message;
+// 		}
+// 		console.log(result.rows);
+// 	})
+// 	res.redirect('/');
+// })
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
