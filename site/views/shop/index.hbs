@@ -1,0 +1,45 @@
+<div class="container">
+  
+	<div class="questions">
+	    <div class="row">
+	    	{{#each questions}}
+	    		<div class="question col-2">
+	            <p>Question {{this.number}}</p>
+	            {{#each this.question}}
+		            <div class="form-check">
+		                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios{{this.number}}"
+		                    value="option {{this.number}}">
+		                <label class="form-check-label" for="exampleRadios{{this.number}}">
+		                    Answer {{this.number}}
+		                </label>
+		            </div>
+	            {{/each}}
+	    	{{/each}}
+	    </div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-2 list-of-products">
+		  	<div class="list-group">
+		  		{{#each categories}}
+					<a href="#" class="list-group-item list-group-item-action active">{{this.name}}</a>
+				{{/each}}
+		    </div>
+		</div>
+		
+		<div class="col-sm-10 products container">
+		    <div class="row">
+		    	{{#each products}}
+		        <div class="card col-3" style="width: 18rem;">
+		            <img src="../images/egg.jpg" class="card-img-top" alt="...">
+		            <div class="card-body">
+						<h5 class="card-title">Card title</h5>
+						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn btn-primary">Add to basket</a>
+		            </div>
+		        </div>
+		        {{/each}}
+	    	</div>
+		</div>
+	</div>
+</div>
