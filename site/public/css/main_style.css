@@ -1,0 +1,72 @@
+.header{
+    height: 200px;
+    margin-top: 25px;
+/*    padding-left:85px;
+    padding-right: 85px;*/
+}
+
+.logo{
+    width: 200px;
+    max-height: 300px;
+    float:left;
+}
+
+.name_page{
+    height: 150px;
+    text-align: center;
+    font-size: 65px;
+    float:left;
+    margin-top: 40px;
+}
+
+.buttons_header
+{
+    float: left;
+    margin-top: 40px;
+    margin-left: 140px;
+}
+
+.button_login{
+    text-align: center;
+    padding: 5px;
+}
+
+.about-us{
+    text-align: center;
+    /*border: 4px solid black;*/
+    width: 100%;
+    margin: 25px;
+    height: 250px;
+}
+
+.carousel_item{
+    width: 100%;
+    height: 450px;
+}
+
+.image{
+    height: 500px;
+    padding: 25px;
+}
+
+.question {
+    border: 2px solid black;
+    margin: 10px;
+    padding: 5px;
+}
+.questions{
+    margin: 35px;
+}
+
+.list-of-products{
+    width: 15%;
+    /*border: 2px solid black;*/
+    padding: 7px;
+    text-align: center;
+}
+
+.products{
+    width: 30%;
+    border: 2px solid black;
+    background-color: #ffcccc;
+}
