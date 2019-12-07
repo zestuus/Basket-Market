@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken');
 const secret = 'basket-market-secret';
 var Pool = require("pg").Pool;
 var pool = new Pool({
-    user: "postgres",
+    user: "basket_market_admin",
     host: "localhost",
     database: "Basket Market",
-    password: "5214789bnm",
+    password: "basket_market",
     port: 5432
 });
 
@@ -26,11 +26,10 @@ function checkToken(req, res, next) {
     next();
 };
 
-
 /* GET users listing. */
 
 //******Register*****
-router.get('/signup', (req, res) => {
+router.get('/signup', checkToken, (req, res) => {
     if (req.user == undefined) {
         res.render('user/signup', { title: 'signup' });
     } else {
@@ -67,7 +66,7 @@ router.post('/signup', (req, res) => {
 
 
 //*****LogIn*****
-router.get('/login', (req, res) => {
+router.get('/login', checkToken, (req, res) => {
     if (req.user == undefined) {
         res.render('user/login', { title: 'login' });
     } else {
@@ -97,7 +96,7 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', checkToken, (req, res) => {
     res.clearCookie('checkToken');
     res.redirect('/')
 });
