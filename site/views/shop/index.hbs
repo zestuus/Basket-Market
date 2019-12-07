@@ -16,11 +16,11 @@
     
       <div class="buttons_header pull-right">
 		{{#if logined}}
-        <div class="button_login"><a class="btn btn-primary" href="/user/login" type="submit">Sign in</a></div>
-        <div class="button_login"><a class="btn btn-primary" href="/user/signup" type="submit">Sign up</a></div>
-		{{else}}
 		<div class="button_login"><a class="btn btn-primary" href="/user/profile" type="submit">Profile</a></div>
         <div class="button_login"><a class="btn btn-primary" href="/user/logout" type="submit">Log out</a></div>
+		{{else}}
+        <div class="button_login"><a class="btn btn-primary" href="/user/login" type="submit">Sign in</a></div>
+        <div class="button_login"><a class="btn btn-primary" href="/user/signup" type="submit">Sign up</a></div>
 		{{/if}}
       </div>
       </div>

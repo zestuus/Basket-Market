@@ -12,22 +12,12 @@ var app = express();
 
 var Pool = require("pg").Pool;
 var pool = new Pool({
-    user: "postgres",
+    user: "basket_market_admin",
     host: "localhost",
     database: "Basket Market",
-    password: "5214789bnm",
+    password: "basket_market",
     port: 5432
-})
-
-app.get("/query", (req, res) => {
-    pool.query('SELECT * FROM products', (err, result) => {
-        if (err) {
-            throw err.message;
-        }
-        console.log(result.rows);
-    })
-    res.redirect('/');
-})
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
