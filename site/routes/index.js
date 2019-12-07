@@ -21,6 +21,7 @@ router.get('/', function(req, res, next) {
                 } else {
                     res.render('shop/index', {
                         title: 'Basket Market',
+                        logined: req.user,
                         questions: [],
                         categories: cat_res.rows,
                         products: prod_res.rows
