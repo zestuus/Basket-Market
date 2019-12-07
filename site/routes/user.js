@@ -2,6 +2,16 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 
+const secret = 'basket-market-secret';
+var Pool = require("pg").Pool;
+var pool = new Pool({
+    user: "postgres",
+    host: "localhost",
+    database: "Basket Market",
+    password: "5214789bnm",
+    port: 5432
+});
+
 function checkToken(req, res, next) {
     const token = req.cookies['checkToken']
     if (token) {
@@ -27,23 +37,33 @@ router.get('/signup', (req, res) => {
         res.redirect('/');
     }
 });
-// app.post('/signup', (req, res) => {
-//   var user = [
-//       req.body.email,
-//       req.body.psw,
-//       req.body.psw-repeat
-//   ]
-//   try {
-//       pool.query('Insert into users values ($1, $2, $3);', [user[3], user[4], user[0], user[1], user[2], 1], (error, results) => {
-//           if (error) {
-//               throw 'Error Insert'
-//           }
-//           res.redirect('/login');
-//       })
-//   } catch (error) {
-//       res.redirect('/signup');
-//   }
-// });
+router.post('/signup', (req, res) => {
+    var user = [
+        req.body.username,
+        req.body.address,
+        req.body.email,
+        req.body.psw,
+        req.body.psw_repeat
+    ]
+    try {
+        if (req.body.psw == req.body.psw_repeat) {
+            pool.query('select email from users where email=$1', [user[2]], (error, results) => {
+                console.log(user[2])
+                console.log(results.rows);
+                if (results.rows.length == 0) {
+                    pool.query('Insert into users (username, password, email, address) values ($1, $2, $3, $4);', [user[0], user[3], user[2], user[1]], (error, results) => {
+                        if (error) {
+                            throw 'Error Insert'
+                        }
+                        res.redirect('/user/login');
+                    });
+                } else res.redirect('/user/signup');
+            });
+        }
+    } catch (error) {
+        res.redirect('/user/signup');
+    }
+});
 
 
 //*****LogIn*****
@@ -54,36 +74,32 @@ router.get('/login', (req, res) => {
         res.redirect('/');
     }
 });
-// app.post('/login', (req, res) => {
-//   try {
-//       pool.query('select * from users where login=$1', [req.body.login], (error, results) => {
-//           try {
-//               if (results.rows.length == 0) {
-//                   throw 'Wrong login'
-//               }
-//               if (req.body.password != results.rows[0]['user_password']) {
-//                   throw 'Wrong password'
-//               } else {
-//                   const token = jwt.sign({ login: results.rows[0]['login'], role: results.rows[0]['role'] }, secret);
-//                   res.cookie('checkToken', token);
+router.post('/login', (req, res) => {
+    try {
+        pool.query('Select * from users where email=$1', [req.body.email], (error, results) => {
+            if (error) {
+                console.log(error.message);
+            }
+            if (results.rows.length == 0) {
+                console.log('wrong email!');
+            }
+            if (req.body.psw != results.rows[0]['password']) {
+                console.log('wrong password!');
+            } else {
+                const token = jwt.sign({ email: results.rows[0]['email'] }, secret);
+                res.cookie('checkToken', token);
+                res.redirect("/");
+            }
+        });
 
-//                   res.redirect("/");
-//               }
-//               if (error) {
-//                   throw 'Error login'
-//               }
-//           } catch (error) {
-//               res.redirect('/login');
-//           }
-//       })
-//   } catch (error) {
-//       res.redirect('/login');
-//   }
-// });
+    } catch (error) {
+        res.redirect('/user/login');
+    }
+});
 
-// app.get('/logout', (req, res) => {
-//     res.clearCookie('checkToken');
-//     res.redirect('/')
-// });
+router.get('/logout', (req, res) => {
+    res.clearCookie('checkToken');
+    res.redirect('/')
+});
 
 module.exports = router;
