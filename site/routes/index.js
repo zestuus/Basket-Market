@@ -28,7 +28,7 @@ function checkToken(req, res, next) {
 
 /* GET home page. */
 router.get('/', checkToken, function(req, res, next) {
-    pool.query('Select name from categories', (error, cat_res) => {
+    pool.query('Select * from categories', (error, cat_res) => {
         if (error) {
             console.log(error.message);
         } else {

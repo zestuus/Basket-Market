@@ -16,11 +16,11 @@
     
       <div class="buttons_header pull-right">
 		{{#if logined}}
-		<div class="button_login"><a class="btn btn-primary" href="/user/profile" type="submit">Profile</a></div>
-        <div class="button_login"><a class="btn btn-primary" href="/user/logout" type="submit">Log out</a></div>
+		<div class="button_login"><a class="btn btn-outline-success" href="/user/profile" type="submit">Profile</a></div>
+        <div class="button_login"><a class="btn btn-outline-success" href="/user/logout" type="submit">Log out</a></div>
 		{{else}}
-        <div class="button_login"><a class="btn btn-primary" href="/user/login" type="submit">Sign in</a></div>
-        <div class="button_login"><a class="btn btn-primary" href="/user/signup" type="submit">Sign up</a></div>
+        <div class="button_login"><a class="btn btn-outline-success" href="/user/login" type="submit">Sign in</a></div>
+        <div class="button_login"><a class="btn btn-outline-success" href="/user/signup" type="submit">Sign up</a></div>
 		{{/if}}
       </div>
       </div>
@@ -52,7 +52,7 @@
 		<div class="col-sm-2 list-of-products">
 		  	<div class="list-group">
 		  		{{#each categories}}
-					<a href="#" class="list-group-item list-group-item-action active">{{this.name}}</a>
+					<a href="/{{this.id}}" class="btn btn-outline-success" class="list-group-item list-group-item-action active">{{this.name}}</a>
 				{{/each}}
 		    </div>
 		</div>
@@ -65,7 +65,7 @@
 		            <div class="card-body">
 						<h5 class="card-title">Card title</h5>
 						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-						<a href="#" class="btn btn-primary">Add to basket</a>
+						<a href="#" class="btn btn-outline-success">Add to basket</a>
 		            </div>
 		        </div>
 		        {{/each}}
