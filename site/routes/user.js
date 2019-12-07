@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require("bcryptjs");
 
 const secret = 'basket-market-secret';
 var Pool = require("pg").Pool;
@@ -26,6 +27,14 @@ function checkToken(req, res, next) {
     next();
 };
 
+function encryptPassword (password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
+};
+
+function validPassword (password, stored){
+    return bcrypt.compareSync(password, stored);
+};
+
 /* GET users listing. */
 
 //******Register*****
@@ -47,12 +56,10 @@ router.post('/signup', (req, res) => {
     try {
         if (req.body.psw == req.body.psw_repeat) {
             pool.query('select email from users where email=$1', [user[2]], (error, results) => {
-                console.log(user[2])
-                console.log(results.rows);
                 if (results.rows.length == 0) {
-                    pool.query('Insert into users (username, password, email, address) values ($1, $2, $3, $4);', [user[0], user[3], user[2], user[1]], (error, results) => {
+                    pool.query('Insert into users (username, password, email, address) values ($1, $2, $3, $4);', [user[0], encryptPassword(user[3]), user[2], user[1]], (error, results) => {
                         if (error) {
-                            throw 'Error Insert'
+                            throw error
                         }
                         res.redirect('/user/login');
                     });
@@ -82,7 +89,7 @@ router.post('/login', (req, res) => {
             if (results.rows.length == 0) {
                 console.log('wrong email!');
             }
-            if (req.body.psw != results.rows[0]['password']) {
+            if (!validPassword(req.body.psw, results.rows[0]['password'])) {
                 console.log('wrong password!');
             } else {
                 const token = jwt.sign({ email: results.rows[0]['email'] }, secret);
