@@ -71,6 +71,15 @@ router.post('/signup', (req, res) => {
     }
 });
 
+router.get("/profile", checkToken, (req,res)=>{
+    pool.query("select * from users where email=$1",[req.user.email],(err,result)=>{
+        res.render("user/profile", {
+            title: "Profile",
+            user: result.rows[0]
+        });
+    });
+})
+
 
 //*****LogIn*****
 router.get('/login', checkToken, (req, res) => {
