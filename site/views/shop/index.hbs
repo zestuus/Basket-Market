@@ -82,7 +82,7 @@
 		<div class="col-sm-2 list-of-products">
 		  	<div class="list-group">
 		  		{{#each categories}}
-					<a href="/{{this.id}}" class="btn btn-outline-success" class="list-group-item list-group-item-action active">{{this.name}}</a>
+					<a href="cat/{{this.id}}" class="btn btn-outline-success" class="list-group-item list-group-item-action active">{{this.name}}</a>
 				{{/each}}
 		    </div>
 		</div>
@@ -91,10 +91,17 @@
 		    <div class="row">
 		    	{{#each products}}
 		        <div class="card col-3" style="width: 18rem;">
-		            <img src="../images/egg.jpg" class="card-img-top" alt="...">
+		            <img src="{{this.imagePath}}" class="card-img-top" alt="...">
 		            <div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+						<h5 class="card-title">{{this.name}}</h5>
+						<ul>
+							{{#each this.ingredients}}
+							<li class="card-text">{{this}}</li>
+							{{/each}}
+						</ul>
+						<p><strong>Weight: {{this.weight}} g.</strong></p>
+						<p><strong>Price: {{this.price}}$</strong></p>
+						{{!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
 						<a href="#" class="btn btn-outline-success">Add to basket</a>
 		            </div>
 		        </div>
