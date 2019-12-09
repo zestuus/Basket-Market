@@ -37,6 +37,7 @@ router.get('/', checkToken, function(req, res, next) {
                 products.name as name, 
                 products.price as price,
                 products.weight as weight,
+                products.image as image,
                 categories.name as category,
                 ingredients.name as ingredient
                 from products 
@@ -55,6 +56,7 @@ router.get('/', checkToken, function(req, res, next) {
                         name: prod_res.rows[0].name,
                         price: prod_res.rows[0].price,
                         weight: prod_res.rows[0].weight,
+                        image: prod_res.rows[0].image,
                         category: prod_res.rows[0].category,
                         ingredients: [prod_res.rows[0].ingredient]
                     }];
@@ -70,6 +72,7 @@ router.get('/', checkToken, function(req, res, next) {
                                 name: prod_res.rows[i].name,
                                 price: prod_res.rows[i].price,
                                 weight: prod_res.rows[i].weight,
+                                image: prod_res.rows[i].image,
                                 category: prod_res.rows[i].category,
                                 ingredients: [prod_res.rows[i].ingredient]
                             });
