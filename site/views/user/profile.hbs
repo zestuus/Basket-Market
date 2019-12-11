@@ -85,7 +85,7 @@
 </div>
 
 <div class="basket">
-    <p>Your shopping cart</p>
+    <p>Basket</p>
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -103,9 +103,9 @@
           <th scope="row">{{@index}}</th>
           <td>{{this.cat_name}}</td>
           <td>{{this.prod_name}}</td>
-          <td>{{this.price}}</td>
+          <td>{{this.price}}$</td>
           <td>
-            <button type="button" class="btn btn-outline-success">Delete</button>
+            <a href="/user/delete_from_basket/{{this.product_id}}" class="btn btn-outline-success">Delete</a>
           </td> 
           {{/each}}
         </tr>

@@ -34,11 +34,11 @@ router.get('/', checkToken, function(req, res) {
         } else {
             pool.query(`select 
                 products.id as id,
-                products.prod_name as name, 
+                products.name as name, 
                 products.price as price,
                 products.weight as weight,
                 products.image as image,
-                categories.cat_name as category,
+                categories.name as category,
                 ingredients.name as ingredient
                 from products 
                 inner join categories
