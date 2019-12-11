@@ -41,7 +41,7 @@ router.get("/profile", checkToken, (req, res) => {
     } else {
 
         pool.query("select * from users where email=$1", [req.user.email], (err, user_info) => {
-            pool.query(`select categories.cat_name,products.prod_name,products.price from basket_items
+            pool.query(`select product_id,categories.name as cat_name,products.name as prod_name,products.price from basket_items
                         join products on basket_items.product_id=products.id
                         join categories on products.category_id=categories.id
                         where user_id=$1`, [req.user.id], (error, basket_info) => {
@@ -53,6 +53,16 @@ router.get("/profile", checkToken, (req, res) => {
             });
         });
     }
+});
+
+router.get('/delete_from_basket/:prod_id', checkToken, (req, res) => {
+    pool.query('delete from basket_items where user_id=$1 and product_id=$2', [req.user.id, req.params.prod_id],
+        (error) => {
+            if (error) {
+                throw error;
+            }
+            res.redirect("/user/profile");
+        });
 });
 
 /* GET users listing. */
