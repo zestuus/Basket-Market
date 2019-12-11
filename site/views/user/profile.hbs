@@ -123,4 +123,35 @@
     <div style="    text-align: center;">
       <button type="button" class="btn btn-outline-success" style="width:50%">Make a check</button>
     </div>
+
+<div class="basket">
+    <p>Basket</p>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th score="col">Category</th>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">----</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        {{#each prod_in_basket}}
+        <tr>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.cat_name}}</td>
+          <td>{{this.prod_name}}</td>
+          <td>{{this.price}}$</td>
+          <td>
+            <a href="/user/delete_from_basket/{{this.product_id}}" class="btn btn-outline-success">Delete</a>
+          </td> 
+          {{/each}}
+        </tr>
+      </tbody>
+    </table>
+    <div style="    text-align: center;">
+      <button type="button" class="btn btn-outline-success" style="width:50%">Make a check</button>
+    </div>
   </div>

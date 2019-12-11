@@ -102,6 +102,7 @@ router.get('/add-to-basket/:id', checkToken, (req,res) => {
         res.redirect("/"); 
     });
 });
+
 // router.post('/shop/product_add_to_basket', checkToken, (req, res) => {
 //     console.log(req.user.id, req.body);
 //     // if (req.user == undefined) {

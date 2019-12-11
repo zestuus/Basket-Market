@@ -37,15 +37,32 @@ function validPassword(password, stored) {
 
 router.get("/profile", checkToken, (req, res) => {
     if (req.user == undefined) {
-        res.redirect('/user/login')
+        res.redirect('/user/login');
     } else {
-        pool.query("select * from users where email=$1", [req.user.email], (err, result) => {
-            res.render("user/profile", {
-                title: "Profile",
-                user: result.rows[0]
+
+        pool.query("select * from users inner join preferences on preferences.user_id = users.id where email=$1", [req.user.email], (err, user_info) => {
+            pool.query(`select product_id,categories.name as cat_name,products.name as prod_name,products.price from basket_items
+                        join products on basket_items.product_id=products.id
+                        join categories on products.category_id=categories.id
+                        where user_id=$1`, [req.user.id], (error, basket_info) => {
+                res.render("user/profile", {
+                    title: "Profile",
+                    user: user_info.rows[0],
+                    prod_in_basket: basket_info.rows
+                });
             });
         });
     }
+});
+
+router.get('/delete_from_basket/:prod_id', checkToken, (req, res) => {
+    pool.query('delete from basket_items where user_id=$1 and product_id=$2', [req.user.id, req.params.prod_id],
+        (error) => {
+            if (error) {
+                throw error;
+            }
+            res.redirect("/user/profile");
+        });
 });
 
 /* GET users listing. */
@@ -87,15 +104,6 @@ router.post('/signup', (req, res) => {
     }
 });
 
-router.get("/profile", checkToken, (req,res)=>{
-    pool.query("select * from users inner join preferences on preferences.user_id = users.id where email=$1",[req.user.email],(err,user_info)=>{
-
-        res.render("user/profile", {
-            title: "Profile",
-            user: user_info.rows[0]
-        });
-    });
-})
 router.post("/edit-preferences", checkToken, (req,res)=>{
     var preferences = {
         do_not_eat_meat: req.body.do_not_eat_meat?"true":"false",
@@ -125,7 +133,6 @@ router.post("/edit-preferences", checkToken, (req,res)=>{
                 res.redirect("/user/profile");
             });  
 })
-
 //*****LogIn*****
 router.get('/login', checkToken, (req, res) => {
     if (req.user == undefined) {
@@ -146,7 +153,7 @@ router.post('/login', (req, res) => {
             if (!validPassword(req.body.psw, results.rows[0]['password'])) {
                 console.log('wrong password!');
             } else {
-                const token = jwt.sign({ email: results.rows[0]['email'] , id: results.rows[0]['id'] }, secret);
+                const token = jwt.sign({ email: results.rows[0]['email'], id: results.rows[0]['id'] }, secret);
                 res.cookie('checkToken', token);
                 res.redirect("/");
             }
