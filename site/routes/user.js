@@ -61,6 +61,9 @@ router.post('/signup', (req, res) => {
                         if (error) {
                             throw error
                         }
+                        pool.query(`insert into preferences 
+                            (user_id, do_not_eat_meat, do_not_eat_fish, do_not_eat_dairy_product, do_not_eat_lactose, do_not_eat_egg, do_not_eat_sugar, do_not_eat_gluten)
+                            values($1, false, false, false, false, false, false, false) ;`, (error)=>{});
                         res.redirect('/user/login');
                     });
                 } else res.redirect('/user/signup');
@@ -72,13 +75,42 @@ router.post('/signup', (req, res) => {
 });
 
 router.get("/profile", checkToken, (req,res)=>{
-    
-    pool.query("select * from users where email=$1",[req.user.email],(err,user_info)=>{
+    pool.query("select * from users inner join preferences on preferences.user_id = users.id where email=$1",[req.user.email],(err,user_info)=>{
+
         res.render("user/profile", {
             title: "Profile",
             user: user_info.rows[0]
         });
     });
+})
+router.post("/edit-preferences", checkToken, (req,res)=>{
+    var preferences = {
+        do_not_eat_meat: req.body.do_not_eat_meat?"true":"false",
+        do_not_eat_fish: req.body.do_not_eat_fish?"true":"false",
+        do_not_eat_dairy_product: req.body.do_not_eat_dairy_product?"true":"false",
+        do_not_eat_lactose: req.body.do_not_eat_lactose?"true":"false",
+        do_not_eat_egg: req.body.do_not_eat_egg?"true":"false",
+        do_not_eat_sugar: req.body.do_not_eat_sugar?"true":"false",
+        do_not_eat_gluten: req.body.do_not_eat_gluten?"true":"false"
+    }
+    pool.query(`update preferences 
+        set do_not_eat_meat = $1,
+        do_not_eat_fish = $2,
+        do_not_eat_dairy_product = $3,
+        do_not_eat_lactose = $4,
+        do_not_eat_egg = $5,
+        do_not_eat_sugar = $6,
+        do_not_eat_gluten = $7 
+        where user_id = $8`, [preferences.do_not_eat_meat, 
+            preferences.do_not_eat_fish, 
+            preferences.do_not_eat_dairy_product, 
+            preferences.do_not_eat_lactose, 
+            preferences.do_not_eat_egg, 
+            preferences.do_not_eat_sugar, 
+            preferences.do_not_eat_gluten,
+            req.user.id],(err)=>{
+                res.redirect("/user/profile");
+            });  
 })
 
 

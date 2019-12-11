@@ -21,7 +21,7 @@ function checkToken(req, res, next) {
             } else {
                 req.user = decoded;
             }
-        });
+        }); 
     }
     next();
 };
@@ -90,7 +90,7 @@ router.get('/', checkToken, function(req, res, next) {
                 }
             });
         }
-    });
+    }); 
 });
 
 router.get('/add-to-basket/:id', checkToken, (req,res) => {
@@ -100,7 +100,7 @@ router.get('/add-to-basket/:id', checkToken, (req,res) => {
         if (error) {
             throw error;
         }
-        res.redirect("/");
+        res.redirect("/"); 
     });
 });
 
