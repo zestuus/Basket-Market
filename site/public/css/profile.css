@@ -1,27 +1,30 @@
-.header_profile{
+.header_profile {
     text-align: center;
 }
 
-.profile_grid{
-    border:2px solid black;
+.profile_grid {
+    border: 2px solid black;
     width: 50%;
     padding: 15px;
     margin: 10px 25% 10px;
     background-color: white;
 }
-.img_profile{
+
+.img_profile {
     height: 25%;
     width: 25%;
 }
 
 .hr {
-    background-color: green; /* Цвет линии */
-    height: 7px; /* Толщина линии */
+    background-color: green;
+    /* Цвет линии */
+    height: 7px;
+    /* Толщина линии */
     width: 65%;
-   }
+}
 
-.basket{
-    border:2px solid black;
+.basket {
+    border: 2px solid black;
     width: 50%;
     padding: 15px;
     margin: 10px 25% 10px;

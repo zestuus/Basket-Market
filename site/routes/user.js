@@ -27,13 +27,26 @@ function checkToken(req, res, next) {
     next();
 };
 
-function encryptPassword (password){
+function encryptPassword(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null);
 };
 
-function validPassword (password, stored){
+function validPassword(password, stored) {
     return bcrypt.compareSync(password, stored);
 };
+
+router.get("/profile", checkToken, (req, res) => {
+    if (req.user == undefined) {
+        res.redirect('/user/login')
+    } else {
+        pool.query("select * from users where email=$1", [req.user.email], (err, result) => {
+            res.render("user/profile", {
+                title: "Profile",
+                user: result.rows[0]
+            });
+        });
+    }
+});
 
 /* GET users listing. */
 
@@ -80,7 +93,6 @@ router.get("/profile", checkToken, (req,res)=>{
         });
     });
 })
-
 
 //*****LogIn*****
 router.get('/login', checkToken, (req, res) => {
