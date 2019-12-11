@@ -14,7 +14,7 @@ var pool = new Pool({
 });
 
 function checkToken(req, res, next) {
-    const token = req.cookies['checkToken']
+    const token = req.cookies['checkToken'];
     if (token) {
         jwt.verify(token, secret, (err, decoded) => {
             if (err) {
@@ -72,10 +72,11 @@ router.post('/signup', (req, res) => {
 });
 
 router.get("/profile", checkToken, (req,res)=>{
-    pool.query("select * from users where email=$1",[req.user.email],(err,result)=>{
+    
+    pool.query("select * from users where email=$1",[req.user.email],(err,user_info)=>{
         res.render("user/profile", {
             title: "Profile",
-            user: result.rows[0]
+            user: user_info.rows[0]
         });
     });
 })
@@ -101,7 +102,7 @@ router.post('/login', (req, res) => {
             if (!validPassword(req.body.psw, results.rows[0]['password'])) {
                 console.log('wrong password!');
             } else {
-                const token = jwt.sign({ email: results.rows[0]['email'] }, secret);
+                const token = jwt.sign({ email: results.rows[0]['email'] , id: results.rows[0]['id'] }, secret);
                 res.cookie('checkToken', token);
                 res.redirect("/");
             }
