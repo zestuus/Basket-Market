@@ -102,7 +102,8 @@
 						<p><strong>Weight: {{this.weight}} g.</strong></p>
 						<p><strong>Price: {{this.price}}$</strong></p>
 						{{!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> --}}
-						<a href="#" class="btn btn-outline-success">Add to basket</a>
+						<!--<button onclick="add_to_basket({{this.id}})" class="btn btn-outline-success">Add to basket</button>-->
+						<!--<a href="/shop/product_add_to_basket" class="btn btn-outline-success">Add to basket</a>-->
 		            </div>
 		        </div>
 		        {{/each}}
@@ -110,3 +111,15 @@
 		</div>
 	</div>
 </div>
+<!--<script type="text/javascript">
+        function add_to_basket(product_id) {
+            $.ajax({
+                url: '/shop/product_add_to_basket',
+                method: 'post',
+                data: {
+                    prod_id: product_id
+                }
+            });
+        };
+  </script>-->
+  
