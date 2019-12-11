@@ -90,7 +90,17 @@ router.get('/', checkToken, function(req, res) {
             });
         }
     });
+});
 
+router.get('/add-to-basket/:id', checkToken, (req,res) => {
+    pool.query('insert into basket_items (user_id, product_id) values ($1, $2)',
+    [req.user.id, req.params.id],
+    (error) => {
+        if (error) {
+            throw error;
+        }
+        res.redirect("/");
+    });
 });
 // router.post('/shop/product_add_to_basket', checkToken, (req, res) => {
 //     console.log(req.user.id, req.body);

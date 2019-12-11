@@ -90,8 +90,7 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Category</th>
-          <th scope="col">Name</th>
+          <th scope="col">Product</th>
           <th scope="col">Amount</th>
           <th scope="col">Price</th>
           <th scope="col">----</th>
@@ -99,15 +98,16 @@
         </tr>
       </thead>
       <tbody>
+        {{#each prod_in_basket}}
         <tr>
-          <th scope="row">1</th>
-          <td>Category</td>
-          <td>Mark</td>
-          <td>1</td>
-          <td>3$</td>
+          <th scope="row">{{@index}}</th>
+          <td>{{this.product}}</td>
+          <td>{{this.amount}}</td>
+          <td>{{this.total_price}}</td>
           <td>
             <button type="button" class="btn btn-outline-success">Delete</button>
-          </td>
+          </td> 
+          {{/each}}
         </tr>
       </tbody>
     </table>
