@@ -27,7 +27,7 @@ function checkToken(req, res, next) {
 };
 
 /* GET home page. */
-router.get('/', checkToken, function(req, res, next) {
+router.get('/', checkToken, function(req, res) {
     pool.query('Select * from categories', (error, cat_res) => {
         if (error) {
             console.log(error.message);
@@ -62,10 +62,9 @@ router.get('/', checkToken, function(req, res, next) {
                     }];
                     var prev_id = products[j].id;
                     for (var i = 0; i < prod_res.rows.length; i++) {
-                        if ( prev_id == prod_res.rows[i].id){
+                        if (prev_id == prod_res.rows[i].id) {
                             products[j].ingredients.push(prod_res.rows[i].ingredient);
-                        }
-                        else {
+                        } else {
                             j++;
                             products.push({
                                 id: prod_res.rows[i].id,
@@ -78,7 +77,7 @@ router.get('/', checkToken, function(req, res, next) {
                             });
                             prev_id = products[j].id
                         }
-                    } 
+                    }
                     res.render('shop/index', {
                         title: 'Basket Market',
                         logined: req.user ? true : false,
@@ -93,5 +92,18 @@ router.get('/', checkToken, function(req, res, next) {
     });
 
 });
+// router.post('/shop/product_add_to_basket', checkToken, (req, res) => {
+//     console.log(req.user.id, req.body);
+//     // if (req.user == undefined) {
+//     //     res.redirect('/user/login');
+//     // } else {
+//     //     pool.query('INSERT INTO basket(user_id, product_id) VALUES ($1, $2)', [req.user.id, req.body.id], (error, results) => {
+//     //         if (error) {
+//     //             console.log(error.message);
+//     //         }
+//     //         console.log(req.user.id, req.body.id);
+//     //     });
+//     // }
+// });
 
 module.exports = router;
