@@ -141,6 +141,7 @@ router.get('/login', checkToken, (req, res) => {
         res.redirect('/');
     }
 });
+
 router.post('/login', (req, res) => {
     try {
         pool.query('Select * from users where email=$1', [req.body.email], (error, results) => {

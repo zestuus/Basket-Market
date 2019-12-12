@@ -3,11 +3,11 @@
     <div>
       <img src='../images/user_male2-512.png' style="text-align: end;" class="img_profile">
       <div style="float:right">
+        <p>{{user.username}}</p>
         <button type="button" class="btn btn-outline-success">Edit profile</button>
       </div>
     </div>
     
-    <p>{{user.username}}</p>
     <hr>
   </div>
   <div>
@@ -92,38 +92,7 @@
   </form>
   
 </div>
-
-<div class="basket">
-    <p>Your shopping cart</p>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Product</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Price</th>
-          <th scope="col">----</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        {{#each prod_in_basket}}
-        <tr>
-          <th scope="row">{{@index}}</th>
-          <td>{{this.product}}</td>
-          <td>{{this.amount}}</td>
-          <td>{{this.total_price}}</td>
-          <td>
-            <button type="button" class="btn btn-outline-success">Delete</button>
-          </td> 
-          {{/each}}
-        </tr>
-      </tbody>
-    </table>
-    <div style="    text-align: center;">
-      <button type="button" class="btn btn-outline-success" style="width:50%">Make a check</button>
-    </div>
-
+</div>
 <div class="basket">
     <p>Basket</p>
     <table class="table table-bordered">
@@ -152,6 +121,6 @@
       </tbody>
     </table>
     <div style="    text-align: center;">
-      <button type="button" class="btn btn-outline-success" style="width:50%">Make a check</button>
+      <a href="/checkout" class="btn btn-outline-success" style="width:50%">Checkout</a>
     </div>
   </div>
