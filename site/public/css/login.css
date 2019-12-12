@@ -3,6 +3,7 @@ form {border: 3px solid #f1f1f1;
        margin: 0 auto;
        background-color: white;
        vertical-align: middle;
+       width: 75%;
    }
 
 input[type=text], input[type=password] {

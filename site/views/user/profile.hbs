@@ -2,12 +2,8 @@
   <div style="text-align: center">
     <div>
       <img src='../images/user_male2-512.png' style="text-align: end;" class="img_profile">
-      <div style="float:right">
-        <p>{{user.username}}</p>
-        <button type="button" class="btn btn-outline-success">Edit profile</button>
-      </div>
+      <p>{{user.username}}</p>
     </div>
-    
     <hr>
   </div>
   <div>
@@ -57,7 +53,6 @@
                 Don`t eat lactose
               </label>
             </div>
-            <div class="col-sm-6">
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="true" name="do_not_eat_egg" id="defaultCheck1" {{#if user.do_not_eat_egg}}checked{{/if}}>
               <label class="form-check-label" for="defaultCheck1">
